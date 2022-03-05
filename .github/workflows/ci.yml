@@ -22,11 +22,11 @@ jobs:
 #           python-version: '3.10'
 #           cache: 'pip'
       - run: |
-          echo '${{ github.event.client_payload }}"'
-          echo '${{ toJson(github.event.client_payload) }}'
+          echo '${{ github.event }}"'
+          echo '${{ toJson(github.event) }}'
 
-          echo '${{ github.event.client_payload }}' >> payload1.txt
-          echo '${{ toJson(github.event.client_payload) }}' >> payload2.txt
+          echo '${{ github.event }}' >> payload1.txt
+          echo '${{ toJson(github.event) }}' >> payload2.txt
           
           cat payload1.txt
           cat payload2.txt
