@@ -35,9 +35,9 @@ jobs:
         with:
           tag_name: canary
           release_name: Chaldea Preview
-          body: Built at ${{ steps.get-date.outputs.date }}
+          body: "Built at: ${{ steps.get-date.outputs.date }}"
           draft: true
-          prerelease: false
+          prerelease: true
 
   publish-release:
     needs: draft-release
