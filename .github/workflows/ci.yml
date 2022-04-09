@@ -1,33 +1,55 @@
-# This is a basic workflow to help you get started with Actions
+name: Deploy to Github Release
 
-name: CI
-
-# Controls when the workflow will run
 on:
-  # Allows you to run this workflow manually from the Actions tab
+  push:
+    branches:
+      - main
   workflow_dispatch:
-  repository_dispatch:
 
 jobs:
-  atlas:
+  draft-release:
+    name: Draft Github release
     runs-on: ubuntu-latest
-    env:
-      output_dir: 'data/'
+    outputs:
+      upload_url: ${{ steps.create_release.outputs.upload_url }}
+      html_url: ${{ steps.create_release.outputs.html_url }}
+      release_id: ${{ steps.create_release.outputs.id }}
     steps:
-      - uses: actions/checkout@v2
+      - name: Get Date
+        id: get-date
+        run: echo "::set-output name=date::$(/bin/date)"
 
-#       - name: Setup Python 3.10
-#         uses: actions/setup-python@v2
-#         with:
-#           python-version: '3.10'
-#           cache: 'pip'
+      - name: Delete previous canary build
+        uses: dev-drprasad/delete-tag-and-release@v0.2.0
+        with:
+          delete_release: true
+          tag_name: canary
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_PAGES_TOKEN }}
+
+      - name: Draft release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_PAGES_TOKEN }}
+        with:
+          tag_name: canary
+          release_name: Chaldea Preview
+          body: Built at ${{ steps.get-date.outputs.date }}
+          draft: true
+          prerelease: false
+
+  publish-release:
+    needs: draft-release
+    runs-on: ubuntu-latest
+    steps:
       - run: |
-          echo '${{ github.event }}"'
-          echo '${{ toJson(github.event) }}'
-
-          echo '${{ github.event }}' >> payload1.txt
-          echo '${{ toJson(github.event) }}' >> payload2.txt
+          echo ${{ needs.draft-release.outputs.release_id }}
+          echo ${{ needs.draft-release.outputs.upload_url }}
+          echo ${{ needs.draft-release.outputs.html_url }}
           
-          cat payload1.txt
-          cat payload2.txt
-          
+      - uses: eregon/publish-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_PAGES_TOKEN }}
+        with:
+          release_id: ${{ needs.draft-release.outputs.release_id }}
