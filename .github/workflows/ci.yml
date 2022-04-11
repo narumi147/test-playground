@@ -51,7 +51,7 @@ jobs:
 
       - name: Publish release
         id: create_release
-        uses: actions/create-release@latest
+        uses: ncipollo/release-action@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GH_PAGES_TOKEN }}
         with:
