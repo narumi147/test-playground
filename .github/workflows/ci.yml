@@ -41,7 +41,7 @@ jobs:
         id: get-date
         run: echo "::set-output name=date::$(/bin/date)"
       - uses: actions/download-artifact@v3
-      - run: ll
+      - run: ls -l
 
       - name: Delete previous canary build
         uses: dev-drprasad/delete-tag-and-release@v0.2.0
