@@ -20,7 +20,7 @@ jobs:
             target: Linux
       fail-fast: false
     steps:
-      - run: echo "hello world">>hello-${{matrix.target}}.txt
+      - run: echo "hello world" >hello-${{matrix.target}}.txt
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
