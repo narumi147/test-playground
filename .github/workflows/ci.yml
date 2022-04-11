@@ -1,4 +1,4 @@
-name: Deploy to Github Release
+name: Github Release
 
 on:
   push:
@@ -7,13 +7,33 @@ on:
   workflow_dispatch:
 
 jobs:
-  draft-release:
-    name: Draft Github release
+  create-build:
+    name: Create ${{ matrix.target }} build
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        target: [Windows, Linux]
+        include:
+          - os: windows-latest
+            target: Windows
+          - os: ubuntu-latest
+            target: Linux
+      fail-fast: false
+    steps:
+      - run: echo "hello world">>hello-${{matrix.target}}.txt
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: hello-${{ matrix.target }}.txt
+          path: ./hello-${{ matrix.target }}.txt
+
+
+  publish-canary:
+    name: Publish Canary
+    if: github.ref == 'refs/heads/main'
+    needs: create-build
     runs-on: ubuntu-latest
-    outputs:
-      upload_url: ${{ steps.create_release.outputs.upload_url }}
-      html_url: ${{ steps.create_release.outputs.html_url }}
-      release_id: ${{ steps.create_release.outputs.id }}
     steps:
       - name: Get Date
         id: get-date
@@ -27,29 +47,15 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GH_PAGES_TOKEN }}
 
-      - name: Draft release
+      - name: Publish release
         id: create_release
-        uses: actions/create-release@v1
+        uses: actions/create-release@latest
         env:
           GITHUB_TOKEN: ${{ secrets.GH_PAGES_TOKEN }}
         with:
           tag_name: canary
           release_name: Chaldea Preview
-          body: "Built at: ${{ steps.get-date.outputs.date }}"
-          draft: true
+          body: Built at ${{ steps.get-date.outputs.date }}
+          draft: false
           prerelease: true
-
-  publish-release:
-    needs: draft-release
-    runs-on: ubuntu-latest
-    steps:
-      - run: |
-          echo ${{ needs.draft-release.outputs.release_id }}
-          echo ${{ needs.draft-release.outputs.upload_url }}
-          echo ${{ needs.draft-release.outputs.html_url }}
-          
-      - uses: eregon/publish-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_PAGES_TOKEN }}
-        with:
-          release_id: ${{ needs.draft-release.outputs.release_id }}
+          artifacts: "hello-*"
