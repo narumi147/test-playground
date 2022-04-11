@@ -25,7 +25,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ matrix.target }}
+          name: upload-${{ matrix.target }}
           path: ./hello-${{ matrix.target }}.txt
       - run: ls -l -R
 
@@ -61,4 +61,4 @@ jobs:
           body: Built at ${{ steps.get-date.outputs.date }}
           draft: false
           prerelease: true
-          artifacts: "hello-*"
+          artifacts: "upload-*/*"
