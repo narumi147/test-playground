@@ -34,6 +34,8 @@ jobs:
     if: github.ref == 'refs/heads/main'
     needs: create-build
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Get Date
         id: get-date
