@@ -25,8 +25,9 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
-          name: hello-${{ matrix.target }}.txt
+          name: ${{ matrix.target }}
           path: ./hello-${{ matrix.target }}.txt
+      - run: ls -l -R
 
 
   publish-canary:
@@ -41,7 +42,7 @@ jobs:
         id: get-date
         run: echo "::set-output name=date::$(/bin/date)"
       - uses: actions/download-artifact@v3
-      - run: ls -l
+      - run: ls -l -R
 
       - name: Delete previous canary build
         uses: dev-drprasad/delete-tag-and-release@v0.2.0
