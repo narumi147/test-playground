@@ -20,7 +20,6 @@ jobs:
             target: Windows
       fail-fast: false
     steps:
-      - run: echo "hello world" >hello-${{matrix.target}}.txt
       - name: Get Version
         shell: bash
         run: |
@@ -30,5 +29,6 @@ jobs:
           else
               echo "VERSION=preview" >> $GITHUB_ENV
           fi
+      - run: |
           echo "VERSION = $VERSION"
 
