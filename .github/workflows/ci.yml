@@ -15,50 +15,20 @@ jobs:
         target: [Linux2, Linux]
         include:
           - os: ubuntu-latest
-            target: Linux2
-          - os: ubuntu-latest
             target: Linux
+          - os: windows-latest
+            target: Windows
       fail-fast: false
     steps:
       - run: echo "hello world" >hello-${{matrix.target}}.txt
+      - name: Get Version
+        shell: bash
+        run: |
+          echo ${{ matrix.os }}
+          if [ "${{ startsWith(github.ref, 'refs/tags/v') }}" = "true" ]; then
+              echo "VERSION=${GITHUB_REF/refs\/tags\/v/}" >> $GITHUB_ENV
+          else
+              echo "VERSION=preview" >> $GITHUB_ENV
+          fi
+          echo "VERSION = $VERSION"
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: upload-${{ matrix.target }}
-          path: ./hello-${{ matrix.target }}.txt
-      - run: ls -l -R
-
-
-  publish-canary:
-    name: Publish Canary
-    if: github.ref == 'refs/heads/main'
-    needs: create-build
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
-      - name: Get Date
-        id: get-date
-        run: echo "::set-output name=date::$(/bin/date)"
-      - uses: actions/download-artifact@v3
-      - run: ls -l -R
-
-      - name: Delete previous canary build
-        uses: dev-drprasad/delete-tag-and-release@v0.2.0
-        with:
-          delete_release: true
-          tag_name: canary
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_PAGES_TOKEN }}
-
-      - name: Publish release
-        id: create_release
-        uses: ncipollo/release-action@v1
-        with:
-          tag: canary
-          name: Chaldea Preview
-          body: Built at ${{ steps.get-date.outputs.date }}
-          draft: false
-          prerelease: true
-          artifacts: "upload-*/*"
