@@ -12,7 +12,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        target: [Linux2, Linux]
+        target: [Linux, Windows]
         include:
           - os: ubuntu-latest
             target: Linux
