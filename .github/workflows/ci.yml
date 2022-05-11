@@ -29,7 +29,8 @@ jobs:
           else
               echo "VERSION=preview" >> $GITHUB_ENV
           fi
-      - shell: bash
-        run: |
+      - run: |
           echo "VERSION = $VERSION"
+          echo "VERSION = ${env:VERSION}"
+          echo "VERSION = ${{env.VERSION}}"
 
