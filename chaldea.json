@@ -59248,12 +59248,12 @@
         },
         "343": {
           "cur": {
-            "favorite": false,
-            "ascension": 0,
+            "favorite": true,
+            "ascension": 4,
             "skills": [
-              1,
-              1,
-              1
+              10,
+              10,
+              10
             ],
             "appendSkills": [
               0,
@@ -70524,12 +70524,12 @@
               "npLv": 1
             },
             "343": {
-              "favorite": false,
-              "ascension": 0,
+              "favorite": true,
+              "ascension": 4,
               "skills": [
-                1,
-                1,
-                1
+                10,
+                10,
+                10
               ],
               "appendSkills": [
                 0,
