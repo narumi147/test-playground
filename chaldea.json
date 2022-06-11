@@ -59291,7 +59291,7 @@
             ],
             "appendSkills": [
               0,
-              0,
+              5,
               0
             ],
             "costumes": {},
@@ -59350,7 +59350,7 @@
         },
         "1": {
           "cur": {
-            "favorite": false,
+            "favorite": true,
             "ascension": 0,
             "skills": [
               1,
@@ -59384,7 +59384,7 @@
         },
         "2": {
           "cur": {
-            "favorite": false,
+            "favorite": true,
             "ascension": 0,
             "skills": [
               1,
@@ -60187,7 +60187,7 @@
             "bondLimit": 10,
             "npLv": 1
           },
-          "coin": 0,
+          "coin": 200,
           "priority": 1,
           "bond": 0,
           "equipCmdCodes": [
@@ -70657,7 +70657,7 @@
               ],
               "appendSkills": [
                 0,
-                0,
+                5,
                 0
               ],
               "costumes": {},
@@ -70700,9 +70700,9 @@
                 1
               ],
               "appendSkills": [
-                0,
-                0,
-                0
+                1,
+                1,
+                1
               ],
               "costumes": {},
               "grail": 0,
@@ -70727,7 +70727,7 @@
                 0
               ],
               "costumes": {},
-              "grail": 0,
+              "grail": 15,
               "fouHp": 0,
               "fouAtk": 0,
               "fouHp3": 20,
@@ -81444,7 +81444,12 @@
       ],
       "sameEventPlan": true,
       "curSvtPlanNo": 0,
-      "items": {},
+      "items": {
+        "6503": 12,
+        "40080001": 200,
+        "10010001": 200,
+        "94000505": 0
+      },
       "craftEssences": {},
       "mysticCodes": {},
       "summons": [],
