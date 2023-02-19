@@ -14,6 +14,7 @@ jobs:
       - name: Downgrade zstd
         run: |
           zstd --version
+          sudo apt-get remove zstd
           # wget -O zstd.tar.gz  https://github.com/facebook/zstd/releases/download/v1.5.2/zstd-1.5.2.tar.gz
           # tar -xvf zstd.tar.gz
           # cd zstd-1.5.2
