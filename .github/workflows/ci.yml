@@ -14,11 +14,12 @@ jobs:
       - name: Downgrade zstd
         run: |
           zstd --version
-          sudo apt-get remove zstd
+          # sudo apt-get remove zstd
           # wget -O zstd.tar.gz  https://github.com/facebook/zstd/releases/download/v1.5.2/zstd-1.5.2.tar.gz
           # tar -xvf zstd.tar.gz
           # cd zstd-1.5.2
           # sudo make install
+          sudo dpkg --remove zstd
           wget -O zstd.deb http://mirrors.kernel.org/ubuntu/pool/main/libz/libzstd/zstd_1.5.2+dfsg-1_amd64.deb
           sudo dpkg -i zstd.deb
           zstd --version
