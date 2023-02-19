@@ -1,4 +1,4 @@
-name: Github Release
+name: test
 
 on:
   push:
@@ -14,8 +14,8 @@ jobs:
       - name: Downgrade zstd
         run: |
           zstd --version
-          wget -O zstd152.tar.gz  https://github.com/facebook/zstd/releases/download/v1.5.2/zstd-1.5.2.tar.gz
-          tar -xvf zstd152.tar.gz
-          cd zstd152
+          wget -O zstd.tar.gz  https://github.com/facebook/zstd/releases/download/v1.5.2/zstd-1.5.2.tar.gz
+          tar -xvf zstd.tar.gz
+          cd zstd-1.5.2
           make install
           zstd --version
