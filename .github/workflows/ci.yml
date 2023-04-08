@@ -13,4 +13,9 @@ jobs:
     steps:
       - name: Test Windows GITHUB_WORKSPACE
         run: |
-          echo $GITHUB_WORKSPACE
+          echo ${{env.GITHUB_WORKSPACE}}
+          dir
+          cp test.md test.2.md
+          dir
+          cp ${{env.GITHUB_WORKSPACE}}/test.md ${{env.GITHUB_WORKSPACE}}/test.3.md
+          dir
