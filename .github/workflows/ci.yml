@@ -8,15 +8,14 @@ on:
 
 jobs:
   test:
-    runs-on: windows-latest
+    runs-on: linux-latest
 
     steps:
       - uses: actions/checkout@v3
-      - name: Test Windows GITHUB_WORKSPACE
+      - uses: actions/checkout@v3
+        with:
+          path: data/game
+      - name: ls
         run: |
-          echo $env:GITHUB_WORKSPACE
-          dir
-          cp test.md test.2.md
-          dir
-          cp $env:GITHUB_WORKSPACE/test.md $env:GITHUB_WORKSPACE/test.3.md
-          dir
+          df
+
