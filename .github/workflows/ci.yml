@@ -8,14 +8,13 @@ on:
 
 jobs:
   test:
-    runs-on: linux-latest
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
       - uses: actions/checkout@v3
         with:
           path: data/game
-      - name: ls
-        run: |
-          df
+      - name: df
+        run: df
 
