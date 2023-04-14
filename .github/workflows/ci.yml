@@ -15,6 +15,5 @@ jobs:
       - uses: actions/checkout@v3
         with:
           path: data/game
-      - name: df
-        run: df
+      - run: du
 
