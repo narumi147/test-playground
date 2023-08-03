@@ -12,8 +12,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/checkout@v3
-        with:
-          path: data/game
-      - run: du
+      - name: Setup upterm session
+        uses: lhotari/action-upterm@v1
 
